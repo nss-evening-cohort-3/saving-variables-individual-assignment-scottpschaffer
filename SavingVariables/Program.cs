@@ -11,6 +11,7 @@ namespace SavingVariables
         static void Main(string[] args)
         {
             string inp = "";
+            string result2 = "";
             Expression e1 = new Expression();
             do
             {
@@ -18,10 +19,17 @@ namespace SavingVariables
                 inp = Console.ReadLine();
 
                 string[] result1 = e1.Extract(inp);
+                if (result1[0] != "error")
+                {
+                    result2 = e1.Process(result1, inp);
+                }
 
+                Console.WriteLine(result2);
 
-            } while ((inp.ToLower() != "quit") && (inp.ToLower() != "exit"));
+            } while ((result2 != "quit") && (result2 != "exit"));
 
+            Console.WriteLine("Bye");
+            Console.ReadLine();
         }
     }
 }
