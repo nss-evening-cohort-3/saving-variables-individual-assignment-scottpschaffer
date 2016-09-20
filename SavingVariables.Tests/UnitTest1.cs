@@ -1,11 +1,30 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SavingVariables.DAL;
+using System.Collections.Generic;
+using SavingVariables.Models;
+using Moq;
+using System.Data.Entity;
+using System.Linq;
 
 namespace SavingVariables.Tests
 {
     [TestClass]
     public class UnitTest1
     {
+
+        Mock<VarContext> mock_context { get; set; }
+        Mock<DbSet<SaveVars>> mock_savevars_table { get; set; }
+        List<SaveVars> savevars_list { get; set; }
+        VarRepository repo { get; set; }
+
+        [TestMethod]
+        public void Test_Instance()
+        {
+            Expression e0 = new Expression();
+            Assert.IsNotNull(e0);
+        }
+
         [TestMethod]
         public void Test_Regex_r1_outputs_valid()
         {

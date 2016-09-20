@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAL\VarContext.cs" />
+    <Compile Include="DAL\VarRepository.cs" />
     <Compile Include="Expression.cs" />
     <Compile Include="Migrations\201609192250242_InitialCreate.cs" />
     <Compile Include="Migrations\201609192250242_InitialCreate.Designer.cs">
