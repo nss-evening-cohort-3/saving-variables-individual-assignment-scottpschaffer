@@ -42,15 +42,9 @@ namespace SavingVariables.DAL
 
         public SaveVars FindVarByVarName(string varName)
         {
-            List<SaveVars> foundVars = GetVars();
-            foreach (var vars in foundVars)
-            {
-                if (vars.VarName == varName)
-                {
-                    return vars;
-                }
-            }
-            return null;
+
+            SaveVars foundVars = Context.Vars.FirstOrDefault(a => a.VarName.ToLower() == varName.ToLower());
+            return foundVars;
         }
 
         public SaveVars RemoveVar(string varName)
