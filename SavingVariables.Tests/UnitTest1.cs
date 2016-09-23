@@ -85,6 +85,90 @@ namespace SavingVariables.Tests
         }
 
         [TestMethod]
+        public void RepoEnsureAddVarWithArgs()
+        {
+            repo.AddVars(1, "x", 32);
+            List<SaveVars> actual_var = repo.GetVars();
+            string actual_var_name = actual_var.First().VarName;
+            string expected_var_name = "x";
+
+            Assert.AreEqual(expected_var_name, actual_var_name);
+        }
+
+        [TestMethod]
+        public void RepoEnsureFindVarByVarName()
+        {
+            // Arrange
+            savevars_list.Add(new SaveVars { VarId = 1, VarName = "q", Value = 21 });
+            savevars_list.Add(new SaveVars { VarId = 2, VarName = "t", Value = 109 });
+            savevars_list.Add(new SaveVars { VarId = 3, VarName = "g", Value = 54 });
+
+            // Act
+            string vName = "t";
+            SaveVars actual_var = repo.FindVarByVarName(vName);
+
+            // Assert
+            int expected_var_id = 2;
+            int actual_var_id = actual_var.VarId;
+            Assert.AreEqual(expected_var_id, actual_var_id);
+        }
+
+        [TestMethod]
+        public void RepoEnsureFindValueByVarName()
+        {
+            // Arrange
+            savevars_list.Add(new SaveVars { VarId = 1, VarName = "q", Value = 21 });
+            savevars_list.Add(new SaveVars { VarId = 2, VarName = "t", Value = 109 });
+            savevars_list.Add(new SaveVars { VarId = 3, VarName = "g", Value = 54 });
+
+            // Act
+            string vName = "t";
+            SaveVars actual_var = repo.FindVarByVarName(vName);
+
+            // Assert
+            int expected_var_value = 109;
+            int actual_var_value = actual_var.Value;
+            Assert.AreEqual(expected_var_value, actual_var_value);
+        }
+
+        [TestMethod]
+        public void RepoEnsureICanRemoveVar()
+        {
+            // Arrange
+            // Arrange
+            savevars_list.Add(new SaveVars { VarId = 1, VarName = "q", Value = 21 });
+            savevars_list.Add(new SaveVars { VarId = 2, VarName = "t", Value = 109 });
+            savevars_list.Add(new SaveVars { VarId = 3, VarName = "g", Value = 54 });
+
+            // Act
+            string var_name = "t";
+            SaveVars removed_var = repo.RemoveVar(var_name);
+            int expected_var_count = 2;
+            int actual_var_count = repo.GetVars().Count;
+            int expected_var_id = 2;
+            int actual_var_id = removed_var.VarId;
+            // Assert
+            Assert.AreEqual(expected_var_count, actual_var_count);
+            Assert.AreEqual(expected_var_id, actual_var_id);
+        }
+
+        [TestMethod]
+        public void RepoEnsureICanNotRemoveThingsNotThere()
+        {
+            // Arrange
+            savevars_list.Add(new SaveVars { VarId = 1, VarName = "q", Value = 21 });
+            savevars_list.Add(new SaveVars { VarId = 2, VarName = "t", Value = 109 });
+            savevars_list.Add(new SaveVars { VarId = 3, VarName = "g", Value = 54 });
+
+            // Act
+            string var_name = "h";
+            SaveVars removed_var = repo.RemoveVar(var_name);
+
+            // Assert
+            Assert.IsNull(removed_var);
+        }
+
+        [TestMethod]
         public void Test_Instance()
         {
             Expression e0 = new Expression();

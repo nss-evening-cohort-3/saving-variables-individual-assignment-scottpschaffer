@@ -10,6 +10,20 @@ namespace SavingVariables
     public class Expression
     {
         string lastCommand = "";
+        Dictionary<string, string> helpData = new Dictionary<string, string>()
+        {
+            {"lastq", "Lists previous command" },
+            {"quit", "End program" },
+            {"exit", "End program" },
+            {"clear q", "Removes variable 'q' from DB" },
+            {"remove q", "Removes variable 'q' from DB" },
+            {"delete q", "Removes variable 'q' from DB" },
+            {"clear all", "Removes all variables from DB"},
+            {"remove all", "Removes all variables from DB"},
+            {"delete all", "Removes all variables from DB"},
+            {"show all", "Displays all variables from DB and their values"},
+            {"help", "Brings up this list of commands" }
+        };
 
         public string[] Extract(string expr)
         {
@@ -86,7 +100,10 @@ namespace SavingVariables
                     break;
                 case "help":
                     // iterate through list of Commands and their definitions
-                    output = "I'll help you";
+                    foreach(var helpStuff in helpData)
+                    {
+                        Console.WriteLine(helpStuff.Key + " - " + helpStuff.Value);
+                    }
                     break;
                 default:
                     if (input[0].Length == 1)
