@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using SavingVariables.DAL;
+using SavingVariables.Models;
 
 namespace SavingVariables
 {
@@ -78,6 +80,10 @@ namespace SavingVariables
 
         public string Process(string[] input, string origInput)
         {
+
+            VarRepository repo = new VarRepository();
+            List<SaveVars> getVars = repo.GetVars();
+            
             string output = "";
             switch(input[0])
             {
@@ -94,9 +100,51 @@ namespace SavingVariables
                     // check if input[1] is letter or "all"
                     // if letter then remove letter and value from DB
                     // if "all" then delete all entries from DB
+                    if (input[1].Length == 1)
+                    {
+                        SaveVars found = repo.FindVarByVarName(input[1]);
+                        if (found != null)
+                        {
+                            SaveVars deleted = repo.RemoveVar(found.VarName);
+                            output = "\'" + deleted.VarName + "\' is now free!";
+                        }
+                        else
+                        {
+                            output = "Error! Variable not found in DB!";
+                        }
+                    }
+                    else if (input[1] == "all")
+                    {
+                        foreach (SaveVars va in getVars)
+                        {
+                            SaveVars removed = repo.RemoveVar(va.VarName);
+                        }
+                        output = "Deleted all items from database!";
+                    }
+                    else
+                    {
+                        output = "Error! Incorrect entry!";
+                    }
                     break;
                 case "show":
                     // If input[1] is "all" then go through DB and print out letter and value
+                    if (getVars.Count > 0)
+                    {
+                        Console.WriteLine("________________");
+                        Console.WriteLine("| Name | Value |");
+                        Console.WriteLine("----------------");
+
+                        foreach (SaveVars va in getVars)
+                        {
+                            Console.WriteLine("|  " + va.VarName + "   |    " + va.Value + "  | ");
+                        }
+                        Console.WriteLine("________________");
+                    }
+                    else
+                    {
+                        output = "= Database empty! Nothing to show.";
+                    }
+
                     break;
                 case "help":
                     // iterate through list of Commands and their definitions
@@ -117,11 +165,34 @@ namespace SavingVariables
                             {
                                 // Check if input[0] is in DB already
                                 // If not, then add to DB. If yes, then return error message
+                                if (repo.FindVarByVarName(input[0]) == null)
+                                {
+                                    repo.AddVars(getVars.Count, input[0], num1);
+                                    return " = Saved \'" + input[0] + "\' as \'" + input[1] + "\'";
+                                }
+                                else
+                                {
+                                    output = " = Error! \'" + input[0] + "\' is already defined!";
+                                }
+                                
+
+                            }
+                            else
+                            {
+                                output = " = Error! Not a Number!";
                             }
                         }
                         else
                         {
                             // return value of variable (input[0]) 
+                            foreach(SaveVars va in getVars)
+                            {
+                                if (va.VarName == input[0])
+                                {
+                                    return " = " + va.Value.ToString();
+                                }
+                            }
+                            output = " = Error! Not in DB!";
                         }
                     }
 

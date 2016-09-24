@@ -12,9 +12,11 @@ namespace SavingVariables
         {
             string inp = "";
             string result2 = "";
+
             Expression e1 = new Expression();
             do
             {
+                result2 = "Error!";
                 Console.Write(">> ");
                 inp = Console.ReadLine();
 
