@@ -16,7 +16,7 @@ namespace SavingVariables
             Expression e1 = new Expression();
             do
             {
-                result2 = "Error!";
+                result2 = " = Error!";
                 Console.Write(">> ");
                 inp = Console.ReadLine();
 

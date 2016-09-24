@@ -119,11 +119,11 @@ namespace SavingVariables
                         {
                             SaveVars removed = repo.RemoveVar(va.VarName);
                         }
-                        output = "Deleted all items from database!";
+                        output = " = Deleted all items from database!";
                     }
                     else
                     {
-                        output = "Error! Incorrect entry!";
+                        output = " = Error! Incorrect entry!";
                     }
                     break;
                 case "show":

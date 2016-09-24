@@ -244,5 +244,36 @@ namespace SavingVariables.Tests
             string[] expResults = e7.Extract(test7);
             CollectionAssert.AreEqual(expResults, actResults);
         }
+
+        [TestMethod]
+        public void Test_quit()
+        {
+            Expression e8 = new Expression();
+            string test8 = "quit";
+            string[] actResults = { "quit", "error" };
+            string[] expResults = e8.Extract(test8);
+            CollectionAssert.AreEqual(expResults, actResults);
+        }
+
+        [TestMethod]
+        public void Test_exit()
+        {
+            Expression e9 = new Expression();
+            string test9 = "exit";
+            string[] actResults = { "exit", "error" };
+            string[] expResults = e9.Extract(test9);
+            CollectionAssert.AreEqual(expResults, actResults);
+        }
+
+        [TestMethod]
+        public void Test_lastq()
+        {
+            Expression e8 = new Expression();
+            string test10a = "lastq";
+            string[] test10b = { "lastq", "error" };
+            string output10a = e8.Process(test10b, "lastq");
+            string expResults = e8.Process(test10b, "lastq");
+            Assert.AreEqual(expResults, test10a);
+        }
     }
 }
